@@ -1,30 +1,39 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="css/styles.css">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
-    <title>New JS App</title>
-  </head>
-  <body>
-  <div>
-    In this Task, you’ll use built-in Node modules to perform various tasks for your project. You’ll be using the http, url, and fs modules in combination to return files to the user and log requests.
+<html lang="en">
 
-    Directions
+<head>
 
-    Using the terminal, create a “documentation.html” file within your “movie_api” directory. This will contain instructions for other developers on how to use the API you’re building. You can add whatever instructions you think might be helpful, and you'll continue to update this document as you go along. For now, let’s include a title for your API, as well as a basic intro paragraph on what the API does. You can refer back to the project brief at this stage as needed.
-    Within your project directory, create a “server.js” file that imports the http module, listening for requests on port 8080.
-    Now, import the url module at the top of your “server.js” file.
-    Parse the request.url to determine if the URL contains the word “documentation”. If it does, return the “documentation.html” file to the user; otherwise return the “index.html” file.
-    Create a “log.txt” file in your project directory.
-    For all requests coming in to your “server.js” file, use the fs module to log both the request URL and a timestamp to the “log.txt” file.
-    Open GitHub and create a new repository for your project.
-    Push your local project directory to GitHub. For help with how to do this using the terminal, check out GitHub Help: Adding an Existing Project Using the Command Line.
-    Open your GitHub repo in your browser to check that it correctly reflects the work you did in this Task.
-    Submit a link to your GitHub project repository for your Tutor to review.
+    <meta charset="UTF-8">
+    <title>JP-Node.js</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
 
-  </div>
-		<script src="js/scripts.js"></script>
-  </body>
+</head>
+
+<body>
+
+<header>
+    <h1 class="page-title ">Welcome to myFlix</h1>
+</header>
+
+<main>
+    <p> myFlix is the web application which provides users with access to
+        information about different movies, directors, and genres.
+        <br>
+        Users are able to sign up, update their personal information, and create a list of their
+        favorite movies.
+        <br>
+        myFlix consists of well designed REST API and architected database
+        built using JavaScript, Node.js, Express, and MongoDB.
+        <br>
+        The server­side of the myFlix application processes user requests &
+        performs operations against the data stored in the database. </p>
+</main>
+</body>
 </html>
