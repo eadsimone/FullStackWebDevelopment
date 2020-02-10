@@ -1,0 +1,11 @@
+db.createCollection('users');
+db.users.insertOne({each_movie_bellow}); //each row will replace each_movie_bellow
+db.users.find(); // to show all users
+
+db.users.insertOne({"Name":"Tim Allen","Username":"timallen2580","Password":"test123","Email":"tim.allen@gmail.com","Birthday":{"$date":"1980-06-19T00:00:00Z"},"FavoriteMovies":["5e1fc18a1955aa2449c5fdf8","5e1fa6301955aa2449c5fdf1"]}
+);
+
+{ "_id" : ObjectId("5e40c7a826930fd2f7d2f48b"), "Name" : "John Doe", "Username" : "johndoe2580", "Password" : "test123", "Email" : "john.doe@gmail.com", "Birthday" : { "$date" : { "$numberLong" : "-492998400000" } }, "FavoriteMovies" : [ "5e1fc18a1955aa2449c5fdf8", "5e1fa2c51955aa2449c5fdef", "5e1fc0d31955aa2449c5fdf7", "5e1fbc701955aa2449c5fdf5" ] }
+{ "_id" : ObjectId("5e40c7b426930fd2f7d2f48c"), "Name" : "Bill Doe", "Username" : "billdoe2580", "Password" : "test123", "Email" : "bill.doe@gmail.com", "Birthday" : { "$date" : "1970-05-28T00:00:00Z" }, "FavoriteMovies" : [ "5e1fa2c51955aa2449c5fdef", "5e1fbc701955aa2449c5fdf5" ] }
+{ "_id" : ObjectId("5e40c7bf26930fd2f7d2f48d"), "Name" : "Chris Hall", "Username" : "chrishall2580", "Password" : "test123", "Email" : "chris.hall@gmail.com", "Birthday" : { "$date" : "1971-10-19T00:00:00Z" }, "FavoriteMovies" : [ "5e1fc18a1955aa2449c5fdf8", { "$oid" : "5e1fbc701955aa2449c5fdf5" } ] }
+{ "_id" : ObjectId("5e40c7ce26930fd2f7d2f48e"), "Name" : "Tim Allen", "Username" : "timallen2580", "Password" : "test123", "Email" : "tim.allen@gmail.com", "Birthday" : { "$date" : "1980-06-19T00:00:00Z" }, "FavoriteMovies" : [ "5e1fc18a1955aa2449c5fdf8", "5e1fa6301955aa2449c5fdf1" ] }
