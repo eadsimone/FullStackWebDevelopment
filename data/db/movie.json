@@ -1,1 +1,0 @@
-INSERT INTO public.movies (movieid, title, description, directorid, genreid, imageurl, featured) VALUES (2, 'Toy Story 4', 'Toy Story 4 is a 2019 American computer-animated comedy film produced by Pixar Animation Studios for Walt Disney Pictures. It is the fourth installment in Pixars Toy Story series.', 29, 1, 'toystory_4.jpg', false);

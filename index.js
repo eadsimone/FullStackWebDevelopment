@@ -1,234 +1,272 @@
-const express = require("express");
-  bodyParser = require("body-parser");
-  uuid = require("uuid");
-const morgan = require("morgan");
+//@ts-check
+const express = require('express'),
+    morgan = require('morgan'),
+    bodyParser = require('body-parser'),
+    uuid = require("uuid");
+const mongoose = require('mongoose');
+const Models = require('./models.js');
+
+const Movies = Models.Movie;
+const Users = Models.User;
+const cors = require('cors');
+const { check, validationResult } = require('express-validator');
 const app = express();
+require('./passport');
 
-  // app.use initializations
-  app.use(bodyParser.json());
-  app.use(morgan("common"));
-  app.use(express.static("public"));
-  app.use(function(err, req, res, next) {
-    console.error(err.stack);
-    res.status(500).send('Something broke!');
-  });
+mongoose.connect('mongodb+srv://rutinsped:1Rutinsped5@cinesider-uci2n.mongodb.net/Movies?retryWrites=true&w=majority', { useNewUrlParser: true });
 
-// List of the movies
-let Movies = [
-    {
-        title : 'Gladiator',
-        description : 'A former Roman General sets out to exact vengeance against the corrupt emperor who murdered \
-        his family and sent him into slavery.',
-        genre : 'Action',
-        director : 'Ridley Scott',
-        image : 'gladiator.png'
-    },
-    {
-        title : 'Slumdog Millionaire',
-        description : 'A Mumbai teenager reflects on his life after being accused of cheating on the Indian version of \
-        Who Wants to be a Millionaire ?',
-        genre : 'Drama',
-        director : 'Danny Boyle,',
-        image : 'Slumdog Millionaire.png'
-    },
-    {
-        title : 'Schindler\'s List',
-        description : 'In German-occupied Poland during World War II, industrialist Oskar Schindler gradually becomes concerned \
-        for his Jewish workforce after witnessing their persecution by the Nazis.',
-        genre : 'Drama',
-        director : 'Steven Spielberg',
-        image : 'schindler\'s list.png'
-    },
-    {
-        title : 'The Shape of Water',
-        description : 'At a top secret research facility in the 1960s, a lonely janitor forms a unique relationship with an \
-        amphibious creature that is being held in captivity.',
-        genre : 'Adventure',
-        director : 'Guillermo del Toror',
-        image : 'The Shape of Water.png'
-    },
-    {
-        title : 'Heaven & Earth',
-        description : 'During the Vietnam War, a Vietnamese woman struggles hustling on the streets, where she comes face to \
-        face with those involved in the conflict around her.',
-        genre : 'Action',
-        director : 'Oliver Stone',
-        image : 'Heaven & Earth movie.png'
-    }
-]
+app.use(morgan("common"));
 
-// List of genres
-let Genres = [
-  {
-      name : 'Action',
-      description : 'Action film is a film genre in which the protagonist or protagonists \
-      are thrust into a series of events that typically include violence, extended \
-      fighting, physical feats, and frantic chases. Action films tend to feature a \
-      resourceful hero struggling against incredible odds, which include \
-      life-threatening situations, a villain, or a pursuit which usually concludes in \
-      victory for the hero.'
-  },
+app.use(bodyParser.json());
 
-  {
-        name : 'Adventure',
-        description : 'Adventure Films are exciting stories, with new experiences or exotic locales. Adventure films are very \ similar to the action film genre, in that they are designed to provide an action-filled, energetic experience for the \
-         film viewer.'
-    },
+app.use(cors());
 
-  {
-        name : 'Drama',
-        description : 'In film and television, drama is a genre of narrative fiction (or semi-fiction) intended to be more \ serious than humorous in tone. All forms of cinema or television that involve fictional stories are forms of drama in \ the broader sense if their storytelling is achieved by means of actors who represent (mimesis) characters.'
-    },
+var allowedOrigins = ['http://cinesider.herokuapp.com/', 'https://cinesider.herokuapp.com/', 'http://localhost:3000', 'http://localhost:1234', 'http://localhost:27017']
 
-    {
-        name : 'Thriller',
-        description : 'Thriller film, also known as suspense film or suspense thriller, is \
-        a broad film genre that evokes excitement and suspense in the audience. Tension is \
-        created by delaying what the audience sees as inevitable, and is built through \
-        situations that are menacing or where escape seems impossible.'
-    }
-]
-
-// List of the directors
-let Directors = [
-    {
-        name : 'Ridley Scott',
-        born : 'November 30, 1937'
-    },
-    {
-        name : 'Danny Boyle',
-        born : 'October 20, 1956'
-    },
-    {
-        name : 'Steven Spielberg',
-        born : 'December 18, 1946'
-    },
-    {
-        name : 'Guillermo del Toro',
-        born : 'October 9, 1964'
-    },
-    {
-        name : 'Oliver Stone',
-        born : 'September 15, 1946'
-    }
-]
-
-// User information
-let Users = [
-    {
-        id : 1,
-        username : 'jonedoe123',
-        password : 'password123',
-        email : 'example@gmail.com',
-        date_of_birth : "January 1, 1966",
-        Favorites : {
-
+app.use(cors({
+    origin: function(origin, callback){
+        if(!origin) return callback(null, true);
+        if(allowedOrigins.indexOf(origin) === -1){ // If a specific origin isn’t found on the list of allowed origins
+            var message = 'The CORS policy for this application doesn’t allow access from origin ' + origin;
+            return callback(new Error(message ), false);
         }
+        return callback(null, true);
     }
-]
+}));
 
-// List of the Favorites movies of the users
-let Favorites = [
-    {
-      title : 'The Shape of Water',
-      description : 'At a top secret research facility in the 1960s, a lonely janitor forms a unique relationship with an \
-      amphibious creature that is being held in captivity.',
-      genre : 'Adventure',
-      director : 'Guillermo del Toror',
-      image : 'The Shape of Water.png'
-    }
-]
+var auth = require('./auth')(app);
+
+const passport = require('passport');
+require('./passport');
+
+app.use(express.static('public', {
+    etag: true, // Just being explicit about the default.
+    lastModified: true,  // Just being explicit about the default.
+    setHeaders: (res, path) => {
+        if (path.endsWith('.html')) {
+            // All of the project's HTML files end in .html
+            res.setHeader('Cache-Control', 'no-cache');
+        }
+    },
+}));
 
 
-// Gets the list of data about ALL movies (Return a list of ALL movies to the user)
-app.get("/movies", function(req, res) {
-    res.json(Movies)
-});
+// Get movies and details
 
-// Gets the data about a single movie, by name (Return data (description, genre,
-// director, image URL, whether it’s featured or not) about a single movie by title to the user)
+app.get('/movies', passport.authenticate('jwt', { session: false }), function(req, res) {
 
-app.get("/movies/:title", (req, res) => {
-    res.json(Movies.find((movie) => {
-        return movie.title === req.params.title
-    }));
-});
-
-// Get data about a movie genre, by name
-// (Return data about a genre (description) by name/title (e.g., “Thriller”))
-app.get("/genres/:name", (req, res) => {
-    res.json(Genres.find((genre) => {
-        return genre.name === req.params.name
-    }));
-});
-
-// Get data about a director (Return data about a director (bio, birth year, death year) by name)
-app.get("/directors/:name", (req, res) => {
-    res.json(Directors.find((director) => {
-        return director.name === req.params.name
-    }));
-});
-
-// Add data for a new user (Allow new users to register)
-app.post("/users", (req, res) => {
-    let newUser = req.body;
-
-    if (!newUser.username || !newUser.password) {
-        const message = "Missing username or password in request body";
-        res.status(400).send(message);
-    } else {
-        newUser.id = uuid.v4();
-        Users.push(newUser);
-        res.status(201).send(newUser);
-    }
-});
-
-// Update the user's information (Allow users to update their user info (username, password, email, date of birth)
-app.put("/users/:username", (req, res) => {
-    res.send("Successful User information updated");
-})
-
-// Add movies to user's list of favorites (Allow users to add a movie to their list of favorites)
-app.post("/users/:username/favorites", (req, res) => {
-    let newFavorite = req.body;
-
-    if (!newFavorite.title) {
-        const message = "Missing movie title in request body";
-        res.status(400).send(message);
-    } else {
-        newFavorite.id = uuid.v4();
-        Favorites.push(newFavorite);
-        res.status(201).send(newFavorite);
-    }
-});
-
-// Remove movies from user's list of favorites (Allow users to remove a movie from their list of favorites)
-app.delete("/users/:username/favorites/:title", (req, res) => {
-    let favorite = Favorites.find((favorite) => {
-        return favorite.title === req.params.title
-    });
-    if (favorite) {
-        Favorites.filter(function(obj) {
-            return obj.title !== req.params.title
+    Movies.find()
+        .then(function(movies) {
+            res.status(201).json(movies)
+        })
+        .catch(function(err) {
+            console.error(err);
+            res.status(500).send("Error: " + err);
         });
-        res.status(201).send(req.params.title + " was removed from favorites.");
-    }
 });
 
-// Deletes a user from list by ID (Allow existing users to deregister)
-app.delete("/users/:username", (req, res) => {
-    let user = Users.find((user) => {
-        return user.username === req.params.username
-    });
-    if (user) {
-        Users.filter(function(obj) {
-            return obj.username !== req.params.username
+app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), function(req, res) {
+    Movies.findOne({ Title : req.params.Title })
+        .then(function(movie) {
+            res.json(movie)
+        })
+        .catch(function(err) {
+            console.error(err);
+            res.status(500).send("Error: " + err);
         });
-        res.status(201).send(req.params.username + " has been removed from registry .");
+});
+
+app.get('/movies/genres/:Name', passport.authenticate('jwt', { session: false }), function(req, res) {
+    Movies.findOne({'Genre.Name': req.params.Name})
+        .then(function(movie){
+            res.json(movie)
+        })
+        .catch(function(err) {
+            console.error(err);
+            res.status(500).send("Error:" + err);
+        });
+});
+
+app.get('/movies/genres/:Title', passport.authenticate('jwt', { session: false }), function(req, res) {
+    Movies.findOne({'Genre.Title': req.params.Title})
+        .then(function(movie){
+            if(movie){
+                res.status(201).send("Movie with the title : " + movie.Title + " is  a " + movie.Genre.Name + " ." );
+            }else{
+                res.status(404).send("Movie with the title : " + req.params.Title + " was not found.");
+            }
+        })
+        .catch(function(err) {
+            console.error(err);
+            res.status(500).send("Error:" + err);
+        });
+});
+
+app.get('/movies/directors/:Name', passport.authenticate('jwt', { session: false }), function(req, res) {
+    Movies.findOne({"Director.Name" : req.params.Name})
+        .then(function(movies){
+            res.json(movies.Director)
+        })
+        .catch(function(err) {
+            console.error(err);
+            res.status(500).send("Error:" + err);
+        });
+});
+
+// Post, Put, Delete - Create, Update, Delete with Movies
+
+app.post("/movies", passport.authenticate('jwt', { session: false }), (req, res, next) => {
+    let newmovie = req.body;
+
+    if (!newmovie.title) {
+        const message = "Missing title in request body";
+        res.status(400).send(message);
+
+    } else {
+        newmovie.id = uuid.v4();
+        Movies.push(newmovie);
+        res.status(201).send(newmovie);
     }
 });
 
-// Listen for requests on port 8080
-app.listen(8080, () => {
-  console.log(`My app is listening on port 8080`);
+// Post, Put, Delete - Create, Update, Delete with Users
+
+app.get('/users', passport.authenticate('jwt', { session: false }), function(req, res) {
+
+    Users.find()
+        .then(function(users) {
+            res.status(201).json(users)
+        })
+        .catch(function(err) {
+            console.error(err);
+            res.status(500).send("Error: " + err);
+        });
 });
+
+app.get('/users/:Username', passport.authenticate('jwt', { session: false }),function(req, res) {
+    Users.findOne({ Username : req.params.Username })
+        .then(function(user) {
+            res.json(user)
+        })
+        .catch(function(err) {
+            console.error(err);
+            res.status(500).send("Error: " + err);
+        });
+});
+
+app.post('/users',
+    [ check('Username', 'Username is required').isLength({min: 5}),
+        check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+        check('Password', 'Password is required').not().isEmpty(),
+        check('Email', 'Email does not appear to be valid').isEmail() ],
+    (req, res) => {
+
+        var errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(422).json({ errors: errors.array() });
+        }
+
+        var hashedPassword = Users.hashPassword(req.body.Password);
+        Users.findOne({ Username : req.body.Username })
+            .then(function(user) {
+                if (user) {
+                    return res.status(400).send(req.body.Username + "already exists");
+                } else {
+                    Users
+                        .create({
+                            Username: req.body.Username,
+                            Name: req.body.Name,
+                            Password: hashedPassword,
+                            Email: req.body.Email,
+                        })
+                        .then(function(user) {res.status(201).json(user)
+                        })
+                        .catch(function(error) {
+                            console.error(error);
+                            res.status(500).send("Error: " + error);
+                        })
+                }
+            }).catch(function(error) {
+            console.error(error);
+            res.status(500).send("Error: " + error);
+        });
+    });
+
+app.put('/users/:Username', passport.authenticate('jwt', { session: false }), function(req, res) {
+    Users.findOneAndUpdate({ Username : req.params.Username },
+        { $set :
+                {
+                    Username : req.body.Username,
+                    Name : req.body.Name,
+                    Password : req.body.Password,
+                    Email : req.body.Email,
+                    Birth_date : req.body.Birth_date
+                }},
+
+        { new : true },
+
+        function(err, updatedUser) {
+            if(err) {
+                console.error(err);
+                res.status(500).send("Error: " + err);
+            } else {
+                res.json(updatedUser)
+            }
+        })
+});
+
+app.post('/users/:Username/Movies/:MovieID', passport.authenticate('jwt', { session: false }), function(req, res) {
+    Users.findOneAndUpdate({ Username : req.params.Username }, {
+            $push : { Favorit_movie : req.params.MovieID }
+        },
+        { new : true }, // This line makes sure that the updated document is returned
+        function(err, updatedUser) {
+            if (err) {
+                console.error(err);
+                res.status(500).send("Error: " + err);
+            } else {
+                res.json(updatedUser)
+            }
+        })
+});
+
+app.delete('/users/:Username/Movies/:MovieID', passport.authenticate('jwt', { session: false }), function(req, res) {
+    Users.findOneAndUpdate({ Username : req.params.Username }, {
+            $pull : { Favorit_movie : req.params.MovieID }
+        },
+        { new : true }, // This line makes sure that the updated document is returned
+        function(err, updatedUser) {
+            if (err) {
+                console.error(err);
+                res.status(500).send("Error: " + err);
+            } else {
+                res.json(updatedUser)
+            }
+        })
+});
+
+app.delete('/users/:Username', passport.authenticate('jwt', { session: false }), function(req, res) {
+    Users.findOneAndRemove({ Username: req.params.Username })
+        .then(function(user) {
+            if (!user) {
+                res.status(400).send(req.params.Username + " was not found");
+            } else {
+                res.status(200).send(req.params.Username + " was deleted.");
+            }
+        })
+        .catch(function(err) {
+            console.error(err);
+            res.status(500).send("Error: " + err);
+        });
+});
+
+app.get('/', function(req, res) {
+    res.send('Welcome to the Cinesider');
+});
+
+var port = process.env.PORT || 3000;
+app.listen(port, "0.0.0.0", function() {
+    console.log("Listening on Port 3000");
+});
+
+console.log("It's working!");
