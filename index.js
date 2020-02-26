@@ -13,7 +13,12 @@ const { check, validationResult } = require('express-validator');
 const app = express();
 require('./passport');
 
-mongoose.connect('mongodb+srv://rutinsped:1Rutinsped5@cinesider-uci2n.mongodb.net/Movies?retryWrites=true&w=majority', { useNewUrlParser: true });
+// mongoose.connect('mongodb+srv://rutinsped:1Rutinsped5@cinesider-uci2n.mongodb.net/Movies?retryWrites=true&w=majority', { useNewUrlParser: true });
+
+mongoose.connect(
+    'mongodb+srv://myFlixDBadmin:Hall3307@myflixdb-qznqw.mongodb.net/myFlixDB?retryWrites=true&w=majority',
+    { useNewUrlParser: true, useFindAndModify: false, useUnifiedTopology: true },
+);
 
 app.use(morgan("common"));
 
