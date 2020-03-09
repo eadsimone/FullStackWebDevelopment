@@ -6,10 +6,9 @@ import axios from 'axios';
 // import Button from 'react-bootstrap/Button';
 // import Navbar from 'react-bootstrap/Navbar';
 //
-import { MovieCard } from '../movie-card/movie-card';
-import {MovieView} from "../movie-view/movie-view";
-// import { MovieView } from '../movie-view/movie-view';
-// import { LoginView } from '../login-view/login-view';
+import { MovieView } from '../movie-view/movie-view';
+import { LoginView } from '../login-view/login-view';
+import {MovieCard} from "../movie-card/movie-card";
 // import { DirectorView } from '../director-view/director-view';
 // import { RegistrationView } from '../registration-view/registration-view';
 // import { GenreView } from '../genre-view/genre-view';
@@ -186,17 +185,19 @@ import {MovieView} from "../movie-view/movie-view";
 //     );
 //   }
 // }
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGYXZvcml0ZU1vdmllcyI6W10sIl9pZCI6IjVlNGFjZWZlMjE0MjNhNjJkMWM3ZmRjZSIsIlVzZXJuYW1lIjoiZWFkZXNpbW9uZSIsIlBhc3N3b3JkIjoiJDJhJDEwJDFSeVlKbm8xUVlqMk9VLlVoR2Rvc084UkpvOGRSdHhmVHh2bHFVTWl6S2x5WlZxN3hDT29xIiwiRW1haWwiOiJlYWRlc2ltb25lQGdtYWlsLmNvbSIsIl9fdiI6MCwiaWF0IjoxNTgyOTE5MjkyLCJleHAiOjE1ODM1MjQwOTIsInN1YiI6ImVhZGVzaW1vbmUifQ._clxf742I41fGT70OMF1KhB9GO4XH3hxLNI3Q4pluDk";
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGYXZvcml0ZU1vdmllcyI6W10sIl9pZCI6IjVlNGFjZWZlMjE0MjNhNjJkMWM3ZmRjZSIsIlVzZXJuYW1lIjoiZWFkZXNpbW9uZSIsIlBhc3N3b3JkIjoiJDJhJDEwJDFSeVlKbm8xUVlqMk9VLlVoR2Rvc084UkpvOGRSdHhmVHh2bHFVTWl6S2x5WlZxN3hDT29xIiwiRW1haWwiOiJlYWRlc2ltb25lQGdtYWlsLmNvbSIsIl9fdiI6MCwiaWF0IjoxNTgzNzE3MTM1LCJleHAiOjE1ODQzMjE5MzUsInN1YiI6ImVhZGVzaW1vbmUifQ.Z5itPKKm4gBTAr54p-qlC8aE0ILSTNasMwr_tjxi898";
 
 export class MainView extends React.Component {
-    constructor(props) {
-        // Call the superclass constructor
-        // so React can initialize it
-        super(props);
+    constructor() {
+        super();
 
-        // Initialize the state to an empty object so we can destructure it later
-        this.state = {};
+        this.state = {
+            movies: null,
+            selectedMovie: null,
+            user: null
+        };
     }
+
 
     // One of the "hooks" available in a React Component
     componentDidMount() {
@@ -222,10 +223,16 @@ export class MainView extends React.Component {
         });
     }
 
+    onLoggedIn(user) {
+        this.setState({
+            user
+        });
+    }
+
     render() {
-        // If the state isn't initialized, this will throw on runtime
-        // before the data is initially loaded
-        const { movies, selectedMovie } = this.state;
+        const { movies, selectedMovie, user } = this.state;
+
+        // if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
 
         // Before the movies have been loaded
         if (!movies) return <div className="main-view"/>;

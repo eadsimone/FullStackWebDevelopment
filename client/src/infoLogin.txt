@@ -11,3 +11,5 @@ https://myflix-movies.herokuapp.com/login?Username=eadesimone&Password=123456
     },
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGYXZvcml0ZU1vdmllcyI6W10sIl9pZCI6IjVlNGFjZWZlMjE0MjNhNjJkMWM3ZmRjZSIsIlVzZXJuYW1lIjoiZWFkZXNpbW9uZSIsIlBhc3N3b3JkIjoiJDJhJDEwJDFSeVlKbm8xUVlqMk9VLlVoR2Rvc084UkpvOGRSdHhmVHh2bHFVTWl6S2x5WlZxN3hDT29xIiwiRW1haWwiOiJlYWRlc2ltb25lQGdtYWlsLmNvbSIsIl9fdiI6MCwiaWF0IjoxNTgyOTE5MjkyLCJleHAiOjE1ODM1MjQwOTIsInN1YiI6ImVhZGVzaW1vbmUifQ._clxf742I41fGT70OMF1KhB9GO4XH3hxLNI3Q4pluDk"
 }
+run dev in client folder, the raid folder where you configured parcel
+$ npm run dev
