@@ -2,7 +2,9 @@
 import React from 'react';
 import axios from 'axios';
 // import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-// import Container from 'react-bootstrap/Container';
+import Container from 'react-bootstrap/Container';
+import  Col from 'react-bootstrap/Col';
+import  Row from 'react-bootstrap/Row';
 // import Button from 'react-bootstrap/Button';
 // import Navbar from 'react-bootstrap/Navbar';
 //
@@ -238,13 +240,25 @@ export class MainView extends React.Component {
         if (!movies) return <div className="main-view"/>;
 
         return (
-            <div className="main-view">
-                {selectedMovie
-                    ? <MovieView movie={selectedMovie}/>
-                    : movies.map(movie => (
-                        <MovieCard key={movie._id} movie={movie} onClick={movie => this.onMovieClick(movie)}/>
-                    ))
-                }
+            // <div className="main-view">
+            //     {selectedMovie
+            //         ? <MovieView movie={selectedMovie}/>
+            //         : movies.map(movie => (
+            //             <MovieCard key={movie._id} movie={movie} onClick={movie => this.onMovieClick(movie)}/>
+            //         ))
+            //     }
+            // </div>
+            <div>
+                <Container>
+                    <Row>
+                        {selectedMovie
+                            ? <Col><MovieView movie={selectedMovie}/></Col>
+                            : movies.map(movie => (
+                                <Col><MovieCard key={movie._id} movie={movie} onClick={movie => this.onMovieClick(movie)}/></Col>
+                            ))
+                        }
+                    </Row>
+                </Container>
             </div>
         );
     }
