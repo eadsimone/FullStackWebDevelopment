@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, BrowserRouter } from 'react-router-dom';
 
 import './login-view.scss';
 import axios from 'axios';
@@ -68,11 +68,11 @@ export function LoginView(props) {
       <Form.Group controlId="newUser">
         <Form.Text>
           New User? Click
-          <Link to="/register">
-            <Button className="login-button btn-sm btn" id="registerButton" variant="link">
-              Register
-            </Button>
-          </Link>
+                <Link to="/register">
+                    <Button className="login-button btn-sm btn" id="registerButton" variant="link">
+                        Register
+                    </Button>
+                </Link>
         </Form.Text>
       </Form.Group>
     </Form>

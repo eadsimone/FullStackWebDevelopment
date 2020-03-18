@@ -7,6 +7,7 @@ import Form from 'react-bootstrap/Form';
 
 import './registration-view.scss';
 import Axios from 'axios';
+  import {Link} from "react-router-dom";
 
 export function RegistrationView() {
   const [name, createName] = useState('');
@@ -96,9 +97,9 @@ export function RegistrationView() {
         <Form.Group controlId="newUser">
           <Form.Text>
             Already Registerd?
-            <Button variant="link" onClick={() => (window.location.href = '/')}>
-              Login
-            </Button>
+            <Link to="/">
+              <Button variant="link">Login</Button>
+            </Link>
           </Form.Text>
         </Form.Group>
       </Form>

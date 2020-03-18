@@ -17,7 +17,7 @@ export class DirectorView extends React.Component {
     if (!director) return null;
 
     return (
-      <div className="directorview">
+      <div className="director__view">
         <Card>
           <Card.Body>
             <Card.Text>
@@ -44,7 +44,7 @@ DirectorView.propTypes = {
   director: PropTypes.shape({
     Name: PropTypes.string,
     Bio: PropTypes.string,
-    Brith: PropTypes.string,
+    Birth: PropTypes.string,
     Death: PropTypes.string,
   }).isRequired,
 };

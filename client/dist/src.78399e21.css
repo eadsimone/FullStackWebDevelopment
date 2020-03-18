@@ -1,22 +1,18 @@
-.my-flix {
-  color: steelblue;
-}
-.movieview {
+.movie__view {
   max-width: 500px;
   padding: 25px;
   margin: auto;
   height: 100%;
 }
 
-.movie-footer {
+.movie__footer {
   position: absolute;
   bottom: 0;
   width: 100%;
-  background-color: clear;
   text-align: center;
 }
 
-.discription-box {
+.movie__description__box {
   margin-bottom: 40px;
 }
 .login-form {
@@ -53,6 +49,113 @@
   background-color: clear;
   text-align: center;
   justify-content: space-between;
+}
+.director__view {
+  max-width: 500px;
+  padding: 25px;
+  margin: auto;
+  height: 100%;
+}
+.registerHeader {
+  color: #fdf5e6;
+  text-align: center;
+}
+
+.registrationForm {
+  widows: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+  height: 100%;
+  color: #fdf5e6;
+}
+.genreview {
+  max-width: 500px;
+  padding: 25px;
+  margin: auto;
+  height: 100%;
+}
+.registerHeader {
+  color: #fdf5e6;
+  text-align: center;
+}
+
+.profile-view {
+  widows: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+  height: 100%;
+  color: white;
+}
+
+.profilecard {
+  max-width: 500px;
+  padding: 25px;
+  margin-top: 20px;
+  color: #333333;
+}
+
+.profile-div {
+  text-align: center;
+}
+
+.home-button {
+  margin-right: 10px;
+}
+.unregister-btn {
+  color: #ffffff;
+}
+
+.unregister-btn:hover {
+  color: white;
+}
+
+.update-view {
+  color: #ffffff;
+  max-width: 500px;
+  padding: 25px;
+  margin: auto;
+  height: 100%;
+}
+
+.page-info {
+  padding-right: 15px;
+  padding-left: 15px;
+  padding-bottom: 20px;
+  color: #add8e6;
+}
+
+.update-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.back-btn1 {
+  margin-right: 10px;
+}
+body {
+  background-color: #112c46;
+}
+
+.logout-button {
+  position: absolute;
+  right: 20px;
+}
+
+.div-container {
+  padding: 20px;
+}
+
+.main-view {
+  padding-top: 25px;
+}
+
+Navbar {
+  margin-bottom: 25px;
+}
+.my__flix {
+  color: steelblue;
 }
 
 /*# sourceMappingURL=/src.78399e21.css.map */

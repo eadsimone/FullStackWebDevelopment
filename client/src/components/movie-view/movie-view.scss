@@ -1,18 +1,17 @@
-.movieview {
+.movie__view {
   max-width: 500px;
   padding: 25px;
   margin: auto;
   height: 100%;
 }
 
-.movie-footer {
+.movie__footer {
   position: absolute;
   bottom: 0;
   width: 100%;
-  background-color: clear;
   text-align: center;
 }
 
-.discription-box {
+.movie__description__box {
   margin-bottom: 40px;
 }

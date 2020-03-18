@@ -1,15 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import { MainView } from './components/main-view/main-view';
 // Import statement to indicate that you need to bundle `./index.scss`
 import './index.scss';
-import { MainView } from './components/main-view/main-view';
 
 // Main component (will eventually use all the others)
 class MyFlixApplication extends React.Component {
     render() {
         return (
-            <div className="my-flix">
+            <div className="my__flix">
                 <MainView />
             </div>
         );
