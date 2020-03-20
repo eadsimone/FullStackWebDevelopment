@@ -27,7 +27,8 @@ module.exports = (router) => {
           if (err) {
             res.send(err);
           }
-          // if username and password in request body exist in db, generateJWTToken creates a JWT based on username and password.
+          // if username and password in request body
+          // exist in db, generateJWTToken creates a JWT based on username and password.
           const token = generateJWTToken(user.toJSON());
           return res.json({ user, token });
         });
