@@ -17,7 +17,7 @@ export function LoginView(props) {
     // Send a request to the server for authentication
     axios({
       method: 'post',
-      url: 'https://myflix-movies.herokuapp.com/login',
+      url: 'https://infinite-hollows-27811.herokuapp.com/login',
       params: {
         Username: username,
         Password: password,

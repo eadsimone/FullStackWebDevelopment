@@ -31,7 +31,7 @@ export class ProfileView2 extends React.Component {
   getUser(token) {
     const username = localStorage.getItem('user');
     axios
-      .get(`https://myflix-movies.herokuapp.com/users/${username}`, {
+      .get(`https://infinite-hollows-27811.herokuapp.com/users/${username}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
@@ -53,7 +53,7 @@ export class ProfileView2 extends React.Component {
     console.log(favoriteMovie);
     axios
       .delete(
-        `http://myflix-movies.herokuapp.com/users/${localStorage.getItem(
+        `http://infinite-hollows-27811.herokuapp.com/users/${localStorage.getItem(
           'user',
         )}/movies/${favoriteMovie}`,
         {
@@ -70,7 +70,7 @@ export class ProfileView2 extends React.Component {
 
   deleteProfile() {
     axios
-      .delete(`https://myflix-movies.herokuapp.com/users/${localStorage.getItem('user')}`, {
+      .delete(`https://infinite-hollows-27811.herokuapp.com/users/${localStorage.getItem('user')}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       })
       .then((res) => {

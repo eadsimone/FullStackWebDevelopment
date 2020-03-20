@@ -19,7 +19,7 @@ export function ProfileUpdate() {
     e.preventDefault();
     axios
       .put(
-        `https://myflix-movies.herokuapp.com/users/${currentUser}`,
+        `https://infinite-hollows-27811.herokuapp.com/users/${currentUser}`,
         {
           Username: username,
           Password: password,

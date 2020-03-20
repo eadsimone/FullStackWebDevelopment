@@ -24,7 +24,7 @@ export class MovieView extends React.Component {
             event.preventDefault();
             axios
                 .post(
-                    `https://myflix-movies.herokuapp.com/users/${localStorage.getItem('user')}/Movies/${
+                    `https://infinite-hollows-27811.herokuapp.com/users/${localStorage.getItem('user')}/Movies/${
                         movie._id
                     }`,
                     {

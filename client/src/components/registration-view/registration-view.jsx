@@ -18,7 +18,7 @@ export function RegistrationView() {
 
   const handleRegistration = (e) => {
     e.preventDefault();
-    Axios.post('https://myflix-movies.herokuapp.com/users', {
+    Axios.post('https://infinite-hollows-27811.herokuapp.com/users', {
       Name: name,
       Username: username,
       Password: password,

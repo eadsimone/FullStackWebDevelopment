@@ -36914,7 +36914,7 @@ function (_React$Component) {
       function handleSubmit(event) {
         event.preventDefault();
 
-        _axios.default.post("https://myflix-movies.herokuapp.com/users/".concat(localStorage.getItem('user'), "/Movies/").concat(movie._id), {
+        _axios.default.post("https://infinite-hollows-27811.herokuapp.com/users/".concat(localStorage.getItem('user'), "/Movies/").concat(movie._id), {
           Username: localStorage.getItem('user')
         }, {
           headers: {
@@ -48555,7 +48555,7 @@ function LoginView(props) {
 
     (0, _axios.default)({
       method: 'post',
-      url: 'https://myflix-movies.herokuapp.com/login',
+      url: 'https://infinite-hollows-27811.herokuapp.com/login',
       params: {
         Username: username,
         Password: password
@@ -48870,7 +48870,7 @@ function RegistrationView() {
   var handleRegistration = function handleRegistration(e) {
     e.preventDefault();
 
-    _axios.default.post('https://myflix-movies.herokuapp.com/users', {
+    _axios.default.post('https://infinite-hollows-27811.herokuapp.com/users', {
       Name: name,
       Username: username,
       Password: password,
@@ -49129,7 +49129,7 @@ function (_React$Component) {
 
       var username = localStorage.getItem('user');
 
-      _axios.default.get("https://myflix-movies.herokuapp.com/users/".concat(username), {
+      _axios.default.get("https://infinite-hollows-27811.herokuapp.com/users/".concat(username), {
         headers: {
           Authorization: "Bearer ".concat(token)
         }
@@ -49153,7 +49153,7 @@ function (_React$Component) {
       event.preventDefault();
       console.log(favoriteMovie);
 
-      _axios.default.delete("http://myflix-movies.herokuapp.com/users/".concat(localStorage.getItem('user'), "/movies/").concat(favoriteMovie), {
+      _axios.default.delete("http://infinite-hollows-27811.herokuapp.com/users/".concat(localStorage.getItem('user'), "/movies/").concat(favoriteMovie), {
         headers: {
           Authorization: "Bearer ".concat(localStorage.getItem('token'))
         }
@@ -49168,7 +49168,7 @@ function (_React$Component) {
     value: function deleteProfile() {
       var _this4 = this;
 
-      _axios.default.delete("https://myflix-movies.herokuapp.com/users/".concat(localStorage.getItem('user')), {
+      _axios.default.delete("https://infinite-hollows-27811.herokuapp.com/users/".concat(localStorage.getItem('user')), {
         headers: {
           Authorization: "Bearer ".concat(localStorage.getItem('token'))
         }
@@ -49313,7 +49313,7 @@ function ProfileUpdate() {
   var handleUpdate = function handleUpdate(e) {
     e.preventDefault();
 
-    _axios.default.put("https://myflix-movies.herokuapp.com/users/".concat(currentUser), {
+    _axios.default.put("https://infinite-hollows-27811.herokuapp.com/users/".concat(currentUser), {
       Username: username,
       Password: password,
       Birthday: birthday,
@@ -49548,7 +49548,7 @@ function (_React$Component) {
     value: function getMovies(token) {
       var _this2 = this;
 
-      _axios.default.get('https://myflix-movies.herokuapp.com/movies', {
+      _axios.default.get('https://infinite-hollows-27811.herokuapp.com/movies', {
         headers: {
           Authorization: "Bearer ".concat(token)
         }
@@ -49778,7 +49778,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52415" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54658" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
