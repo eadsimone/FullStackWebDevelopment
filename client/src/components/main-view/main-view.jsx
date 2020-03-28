@@ -1,6 +1,9 @@
 // //  src/components/main-view/main-view.jsx
 import React from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import { setMovies } from '../../actions/actions';
+
 import Container from 'react-bootstrap/Container';
 import  Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
@@ -16,15 +19,14 @@ import { ProfileView2 } from '../profile-view/profile-view-2';
 import { ProfileUpdate } from '../profile-view/profile-update';
 
 import './main-view.scss';
+import MoviesList from "../movies-list/movies-list";
 
 export class MainView extends React.Component {
     constructor() {
         super();
 
         this.state = {
-            movies: [],
-            user: null,
-            register: false,
+            user: null
         };
     }
 
@@ -77,11 +79,9 @@ export class MainView extends React.Component {
             .get('https://infinite-hollows-27811.herokuapp.com/movies', {
                 headers: { Authorization: `Bearer ${token}` },
             })
-            .then((response) => {
-                // Assing the result to the state
-                this.setState({
-                    movies: response.data,
-                });
+            .then(response => {
+                // #1
+                this.props.setMovies(response.data);
             })
             .catch((error) => {
                 console.log(error);
@@ -89,26 +89,27 @@ export class MainView extends React.Component {
     }
 
     render() {
-        const { movies, user, register } = this.state;
+        let { movies } = this.props;
+        let { user } = this.state;
 
         const renderIndex = () =>{
             if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
-            const movieMapRender = (movies)? movies.map(movie =>
-                <MovieCard key={movie._id} movie={movie}/>
-            ): '';
-            return <Row>{movieMapRender}</Row>;
+            // const movieMapRender = (movies)? movies.map(movie =>
+            //     <MovieCard key={movie._id} movie={movie}/>
+            // ): '';
+            return  (movies)? <MoviesList movies={movies} /> : '';
         };
 
-        if (register) {
-            return (
-                <RegistrationView
-                    onCLick={() => this.alreadyMember()}
-                    onSignedIn={(userParam) => this.onSignedIn(userParam)}
-                />
-            );
-        }
-        // Before the movies have been loaded
-        if (!movies) return <div className="main-view"/>;
+        // if (register) {
+        //     return (
+        //         <RegistrationView
+        //             onCLick={() => this.alreadyMember()}
+        //             onSignedIn={(userParam) => this.onSignedIn(userParam)}
+        //         />
+        //     );
+        // }
+        // // Before the movies have been loaded
+        // if (!movies) return <div className="main-view"/>;
 
         return (
             <Router basename="/client">
@@ -162,3 +163,9 @@ export class MainView extends React.Component {
         );
     }
 }
+
+let mapStateToProps = state => {
+    return { movies: state.movies }
+};
+
+export default connect(mapStateToProps, { setMovies } )(MainView);
