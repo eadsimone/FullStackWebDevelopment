@@ -225,6 +225,12 @@ export class MainView extends React.Component {
         });
     }
 
+    handleBackClick() {
+        this.setState({
+            selectedMovie: null
+        });
+    }
+
     onLoggedIn(user) {
         this.setState({
             user
@@ -252,7 +258,7 @@ export class MainView extends React.Component {
                 <Container>
                     <Row>
                         {selectedMovie
-                            ? <Col><MovieView movie={selectedMovie}/></Col>
+                            ? <Col><MovieView onClick={this.handleBackClick} movie={selectedMovie}/></Col>
                             : movies.map(movie => (
                                 <Col><MovieCard key={movie._id} movie={movie} onClick={movie => this.onMovieClick(movie)}/></Col>
                             ))
